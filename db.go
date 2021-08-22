@@ -1,6 +1,5 @@
 package utils
 
-
 type DBQuery interface {
 	//UpdateOne update value where query true, if no row update, return e.ErrNoRowAffected
 	UpdateOne(value interface{}, query *QueryStruct) error
@@ -14,7 +13,6 @@ type DBQuery interface {
 	Select(query *QueryStruct, field ...interface{}) ([]interface{}, error)
 }
 
-
 type QueryStruct struct {
 	Query interface{}
 	Args  []interface{}
@@ -26,7 +24,6 @@ func NewQuery(query interface{}, args ...interface{}) *QueryStruct {
 		Args:  args,
 	}
 }
-
 
 //ParseField parse field to slice string
 func ParseField(field []interface{}) []string {
