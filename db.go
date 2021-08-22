@@ -13,6 +13,7 @@ type DBQuery interface {
 	Select(query *QueryStruct, field ...interface{}) ([]interface{}, error)
 	//Close close connection
 	Close() error
+	Migrate() error
 }
 
 type QueryStruct struct {
