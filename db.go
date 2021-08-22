@@ -11,6 +11,8 @@ type DBQuery interface {
 	SelectOne(query *QueryStruct, field ...interface{}) (interface{}, error)
 	//SelectOne select all values that match query, return it with fields, if no row return error
 	Select(query *QueryStruct, field ...interface{}) ([]interface{}, error)
+	//Close close connection
+	Close() error
 }
 
 type QueryStruct struct {
