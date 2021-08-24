@@ -1,5 +1,5 @@
 package utils
 
 type Querier interface {
-	ToString() string
+	ToQuery() string
 }
