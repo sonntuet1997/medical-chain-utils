@@ -1,9 +1,13 @@
 package utils
 
-import "time"
+import (
+	"time"
+
+	"github.com/google/uuid"
+)
 
 type ModelBase struct {
-	ID       string    `gorm:"primaryKey;column:id" json:"id"`
+	ID       uuid.UUID `gorm:"type:uuid;default:gen_random_uuid();primaryKey;column:id" json:"id"`
 	UpdateAt time.Time `gorm:"autoUpdateTime" json:"updateAt"`
 	CreateAt time.Time `gorm:"autoCreateTime" json:"createAt"`
 }
