@@ -11,7 +11,7 @@ type CockroachDBStore struct {
 	Interfaces []interface{}
 }
 
-func NewCockroachDB(dsn string) (*CockroachDBStore, error) {
+func NewCockroachDBConnection(dsn string) (*gorm.DB , error) {
 	db, err := gorm.Open(postgres.Open(dsn), &gorm.Config{
 		NowFunc: func() time.Time {
 			return time.Now().Local()
@@ -20,8 +20,9 @@ func NewCockroachDB(dsn string) (*CockroachDBStore, error) {
 	if err != nil {
 		return nil, err
 	}
-	return &CockroachDBStore{Db: db}, nil
+	return db, nil
 }
+
 func (c *CockroachDBStore) Close() error {
 	d, err := c.Db.DB()
 	if err != nil {
