@@ -7,8 +7,8 @@ import (
 )
 
 type CockroachDBStore struct {
-	db         *gorm.DB
-	interfaces []interface{}
+	Db         *gorm.DB
+	Interfaces []interface{}
 }
 
 func NewCockroachDB(dsn string) (*CockroachDBStore, error) {
@@ -20,10 +20,10 @@ func NewCockroachDB(dsn string) (*CockroachDBStore, error) {
 	if err != nil {
 		return nil, err
 	}
-	return &CockroachDBStore{db: db}, nil
+	return &CockroachDBStore{Db: db}, nil
 }
 func (c *CockroachDBStore) Close() error {
-	d, err := c.db.DB()
+	d, err := c.Db.DB()
 	if err != nil {
 		return err
 	}
@@ -31,5 +31,5 @@ func (c *CockroachDBStore) Close() error {
 }
 
 func (c *CockroachDBStore) Migrate() error {
-	return c.db.AutoMigrate(c.interfaces...)
+	return c.Db.AutoMigrate(c.Interfaces...)
 }
