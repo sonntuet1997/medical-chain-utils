@@ -6,6 +6,11 @@ import (
 	"time"
 )
 
+type CommonDataService interface {
+	Close() error
+	Migrate() error
+}
+
 type CockroachDBStore struct {
 	Db         *gorm.DB
 	Interfaces []interface{}
