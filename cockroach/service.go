@@ -21,6 +21,7 @@ func NewCDBConnection(dsn string) (*gorm.DB, error) {
 		NowFunc: func() time.Time {
 			return time.Now().Local()
 		},
+		DisableForeignKeyConstraintWhenMigrating: true,
 	})
 	if err != nil {
 		return nil, err
