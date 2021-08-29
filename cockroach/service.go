@@ -11,12 +11,12 @@ type CommonDataService interface {
 	Migrate() error
 }
 
-type CockroachDBStore struct {
+type CDBService struct {
 	Db         *gorm.DB
 	Interfaces []interface{}
 }
 
-func NewCockroachDBConnection(dsn string) (*gorm.DB , error) {
+func NewCDBConnection(dsn string) (*gorm.DB, error) {
 	db, err := gorm.Open(postgres.Open(dsn), &gorm.Config{
 		NowFunc: func() time.Time {
 			return time.Now().Local()
@@ -28,7 +28,7 @@ func NewCockroachDBConnection(dsn string) (*gorm.DB , error) {
 	return db, nil
 }
 
-func (c *CockroachDBStore) Close() error {
+func (c *CDBService) Close() error {
 	d, err := c.Db.DB()
 	if err != nil {
 		return err
@@ -36,6 +36,6 @@ func (c *CockroachDBStore) Close() error {
 	return d.Close()
 }
 
-func (c *CockroachDBStore) Migrate() error {
+func (c *CDBService) Migrate() error {
 	return c.Db.AutoMigrate(c.Interfaces...)
 }

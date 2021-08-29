@@ -1,4 +1,4 @@
-package utils
+package common
 
 //ParseField parse field to slice string
 func ParseField(field []interface{}) []string {
