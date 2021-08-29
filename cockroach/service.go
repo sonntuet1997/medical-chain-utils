@@ -9,6 +9,7 @@ import (
 type CommonDataService interface {
 	Close() error
 	Migrate() error
+	Drop() error
 }
 
 type CDBService struct {
