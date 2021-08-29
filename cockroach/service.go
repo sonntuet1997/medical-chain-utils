@@ -40,3 +40,7 @@ func (c *CDBService) Close() error {
 func (c *CDBService) Migrate() error {
 	return c.Db.AutoMigrate(c.Interfaces...)
 }
+
+func (c *CDBService) Drop() error {
+	return c.Db.Migrator().DropTable(c.Interfaces...)
+}
