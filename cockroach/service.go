@@ -25,7 +25,7 @@ func NewCDBConnection(dsn string) (*ExtendGorm, error) {
 	if err != nil {
 		return nil, err
 	}
-	return &ExtendGorm{DB: db}, nil
+	return &ExtendGorm{DB: *db}, nil
 }
 
 func (c *CDBService) Close() error {

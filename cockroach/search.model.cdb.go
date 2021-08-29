@@ -7,11 +7,11 @@ import (
 )
 
 type ExtendGorm struct {
-	*gorm.DB
+	gorm.DB
 }
 
 func (s *ExtendGorm) ApplyPagination(defaultSearchModel common.DefaultSearchModel) *ExtendGorm {
-	db := s.DB
+	db := &s.DB
 	if defaultSearchModel.Limit > 0 {
 		db = db.Limit(defaultSearchModel.Limit)
 	}
@@ -19,12 +19,12 @@ func (s *ExtendGorm) ApplyPagination(defaultSearchModel common.DefaultSearchMode
 		db = db.Offset(defaultSearchModel.Skip)
 	}
 	return &ExtendGorm{
-		DB: db,
+		DB: *db,
 	}
 }
 
 func (s *ExtendGorm) ApplySort(defaultSearchModel common.DefaultSearchModel) *ExtendGorm {
-	db := s.DB
+	db := &s.DB
 	if defaultSearchModel.OrderBy != "" {
 		orderByList := strings.Fields(defaultSearchModel.OrderBy)
 		orderTypeList := strings.Fields(defaultSearchModel.OrderType)
@@ -37,7 +37,7 @@ func (s *ExtendGorm) ApplySort(defaultSearchModel common.DefaultSearchModel) *Ex
 		}
 	}
 	return &ExtendGorm{
-		DB: db,
+		DB: *db,
 	}
 }
 
