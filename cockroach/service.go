@@ -12,7 +12,7 @@ type CommonDataService interface {
 }
 
 type CDBService struct {
-	Db         *ExtendGorm
+	Db         *gorm.DB
 	Interfaces []interface{}
 }
 
@@ -29,7 +29,7 @@ func NewCDBConnection(dsn string) (*gorm.DB, error) {
 }
 
 func (c *CDBService) Close() error {
-	d, err := c.Db.DB.DB()
+	d, err := c.Db.DB()
 	if err != nil {
 		return err
 	}
