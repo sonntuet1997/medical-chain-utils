@@ -16,7 +16,7 @@ type CDBService struct {
 	Interfaces []interface{}
 }
 
-func NewCDBConnection(dsn string) (*ExtendGorm, error) {
+func NewCDBConnection(dsn string) (*gorm.DB, error) {
 	db, err := gorm.Open(postgres.Open(dsn), &gorm.Config{
 		NowFunc: func() time.Time {
 			return time.Now().Local()
@@ -25,7 +25,7 @@ func NewCDBConnection(dsn string) (*ExtendGorm, error) {
 	if err != nil {
 		return nil, err
 	}
-	return &ExtendGorm{DB: *db}, nil
+	return db, nil
 }
 
 func (c *CDBService) Close() error {
