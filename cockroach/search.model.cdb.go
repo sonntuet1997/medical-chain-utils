@@ -1,9 +1,10 @@
 package cockroach
 
 import (
+	"strings"
+
 	"github.com/sonntuet1997/medical-chain-utils/common"
 	"gorm.io/gorm"
-	"strings"
 )
 
 type ExtendGorm struct {
@@ -35,6 +36,16 @@ func (s *ExtendGorm) ApplySort(defaultSearchModel common.DefaultSearchModel) *Ex
 			}
 			db = db.Order(orderBy + " " + orderType)
 		}
+	}
+	return &ExtendGorm{
+		DB: *db,
+	}
+}
+
+func (s *ExtendGorm) ApplyFiled(defaultSearchModel common.DefaultSearchModel) *ExtendGorm {
+	db := &s.DB
+	if defaultSearchModel.Fields != nil || len(defaultSearchModel.Fields) > 0 {
+		db = db.Select(defaultSearchModel.Fields)
 	}
 	return &ExtendGorm{
 		DB: *db,

@@ -5,4 +5,5 @@ type DefaultSearchModel struct {
 	Limit     int
 	OrderBy   string
 	OrderType string
+	Fields    []string
 }
