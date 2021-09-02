@@ -16,8 +16,8 @@ type CommonDataService interface {
 
 type CDBService struct {
 	Db         *gorm.DB
-	logger     *logrus.Logger
-	context    context.Context
+	Logger     *logrus.Logger
+	Context    context.Context
 	Interfaces []interface{}
 }
 
