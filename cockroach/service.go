@@ -1,6 +1,8 @@
 package cockroach
 
 import (
+	"context"
+	"github.com/sirupsen/logrus"
 	"gorm.io/driver/postgres"
 	"gorm.io/gorm"
 	"time"
@@ -14,6 +16,8 @@ type CommonDataService interface {
 
 type CDBService struct {
 	Db         *gorm.DB
+	logger     *logrus.Logger
+	context    context.Context
 	Interfaces []interface{}
 }
 
