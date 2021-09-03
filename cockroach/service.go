@@ -14,11 +14,13 @@ type CommonDataService interface {
 	Drop() error
 }
 
+type DBInterfaces []interface{}
+
 type CDBService struct {
 	Db         *gorm.DB
 	Logger     *logrus.Logger
 	Context    context.Context
-	Interfaces []interface{}
+	Interfaces DBInterfaces
 }
 
 func NewCDBConnection(dsn string) (*gorm.DB, error) {

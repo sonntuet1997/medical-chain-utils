@@ -10,7 +10,7 @@ import (
 	"gorm.io/gorm"
 )
 
-func InitCDBService(ctx context.Context, logger *logrus.Logger, db *gorm.DB, interfaces []interface{}) (CDBService, error) {
+func InitCDBService(ctx context.Context, logger *logrus.Logger, db *gorm.DB, interfaces DBInterfaces) (CDBService, error) {
 	wire.Build(wire.Struct(new(CDBService), "Db", "Logger", "Context", "Interfaces"))
 	return CDBService{}, nil
 }

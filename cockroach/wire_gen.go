@@ -14,7 +14,7 @@ import (
 
 // Injectors from service.wire.cdb.go:
 
-func InitCDBService(ctx context.Context, logger *logrus.Logger, db *gorm.DB, interfaces []interface{}) (CDBService, error) {
+func InitCDBService(ctx context.Context, logger *logrus.Logger, db *gorm.DB, interfaces DBInterfaces) (CDBService, error) {
 	cdbService := CDBService{
 		Db:         db,
 		Logger:     logger,
