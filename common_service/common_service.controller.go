@@ -9,6 +9,7 @@ import (
 	"google.golang.org/grpc/status"
 	"google.golang.org/protobuf/types/known/emptypb"
 	"syscall"
+	"time"
 )
 
 var (
@@ -40,6 +41,7 @@ func (c *CommonServiceServer) Watch(request *healthpb.HealthCheckRequest, server
 }
 
 func (c *CommonServiceServer) Kill(_ context.Context, _ *emptypb.Empty) (*emptypb.Empty, error) {
+	c.Logger.Infof("Recieved shutting down request at %s", time.Now())
 	err := syscall.Kill(syscall.Getpid(), syscall.SIGINT)
 	if err != nil {
 		return nil, err
