@@ -19,12 +19,14 @@ var (
 
 type CommonServiceServer struct {
 	pb.UnimplementedCommonServiceServer
-	Logger *logrus.Logger
+	Logger    *logrus.Logger
+	AllowKill bool
 }
 
-func NewCommonServiceServer(logger *logrus.Logger) *CommonServiceServer {
+func NewCommonServiceServer(logger *logrus.Logger, allowKill bool) *CommonServiceServer {
 	return &CommonServiceServer{
-		Logger: logger,
+		Logger:    logger,
+		AllowKill: allowKill,
 	}
 }
 
@@ -41,14 +43,19 @@ func (c *CommonServiceServer) Watch(request *healthpb.HealthCheckRequest, server
 }
 
 func (c *CommonServiceServer) Kill(_ context.Context, _ *emptypb.Empty) (*emptypb.Empty, error) {
-	c.Logger.Infof("Recieved shutting down request at %s", time.Now())
-	err := syscall.Kill(syscall.Getpid(), syscall.SIGINT)
-	if err != nil {
-		return nil, err
+	c.Logger.Warnf("Recieved shutting down request at %s", time.Now())
+	if c.AllowKill {
+		c.Logger.Warnf("Accepted shutting down request at %s", time.Now())
+		err := syscall.Kill(syscall.Getpid(), syscall.SIGINT)
+		if err != nil {
+			return nil, err
+		}
+		err = syscall.Kill(syscall.Getpid(), syscall.SIGTERM)
+		if err != nil {
+			return nil, err
+		}
+		return &emptypb.Empty{}, nil
 	}
-	err = syscall.Kill(syscall.Getpid(), syscall.SIGTERM)
-	if err != nil {
-		return nil, err
-	}
-	return &emptypb.Empty{}, nil
+	c.Logger.Warnf("Rejected shutting down request at %s", time.Now())
+	return nil, status.Errorf(codes.PermissionDenied, "Do you like school?")
 }
