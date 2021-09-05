@@ -20,5 +20,6 @@ func ParseGrpcError(err error) error {
 	if !ok {
 		return ErrParseError
 	}
+
 	return xerrors.New(s.Message())
 }
