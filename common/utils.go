@@ -13,6 +13,7 @@ func StrPtr(a string) *string {
 func Bytes2UUID(a []byte) uuid.UUID {
 	if len(a) != 16 {
 		log.Println("parse uuid fail")
+		return uuid.Nil
 	}
 	var id [16]byte
 	copy(id[:], a)
