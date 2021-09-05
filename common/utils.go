@@ -11,10 +11,10 @@ func StrPtr(a string) *string {
 }
 
 func Bytes2UUID(a []byte) uuid.UUID {
-	id, err := uuid.ParseBytes(a)
-	if err != nil {
-		log.Println(err)
-		return uuid.Nil
+	if len(a) != 16 {
+		log.Println("parse uuid fail")
 	}
-	return id
+	var id [16]byte
+	copy(id[:], a)
+	return uuid.UUID(id)
 }
