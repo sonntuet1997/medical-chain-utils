@@ -2,13 +2,15 @@ package main
 
 import (
 	"fmt"
+	"log"
 
-	"github.com/google/uuid"
-	"github.com/sonntuet1997/medical-chain-utils/common"
+	"github.com/sonntuet1997/medical-chain-utils/cryptography"
 )
 
 func main() {
-	test := uuid.New()
-	a := common.Bytes2UUID(test[:]).String()
+	a, err := cryptography.GenAuthorization("94e914e1-eb58-48ff-9dac-58c19c55896c", "")
+	if err != nil {
+		log.Println(err)
+	}
 	fmt.Printf("a: %v\n", a)
 }
