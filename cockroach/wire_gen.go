@@ -23,3 +23,13 @@ func InitCDBService(ctx context.Context, logger *logrus.Logger, db *gorm.DB, int
 	}
 	return cdbService, nil
 }
+
+func InitCDBRepo(ctx context.Context, logger *logrus.Logger, db *gorm.DB, interfaces DBInterfaces) (CDBRepo, error) {
+	cdbRepo := CDBRepo{
+		Db:         db,
+		Logger:     logger,
+		Context:    ctx,
+		Interfaces: interfaces,
+	}
+	return cdbRepo, nil
+}

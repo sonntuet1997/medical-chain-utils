@@ -14,3 +14,8 @@ func InitCDBService(ctx context.Context, logger *logrus.Logger, db *gorm.DB, int
 	wire.Build(wire.Struct(new(CDBService), "Db", "Logger", "Context", "Interfaces"))
 	return CDBService{}, nil
 }
+
+func InitCDBRepo(ctx context.Context, logger *logrus.Logger, db *gorm.DB, interfaces DBInterfaces) (CDBRepo, error) {
+	wire.Build(wire.Struct(new(CDBRepo), "Db", "Logger", "Context", "Interfaces"))
+	return CDBRepo{}, nil
+}
