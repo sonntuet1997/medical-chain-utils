@@ -8,9 +8,17 @@ import (
 )
 
 func main() {
-	a, err := cryptography.GenAuthorization("94e914e1-eb58-48ff-9dac-58c19c55896c", "")
+	priv, _, err := cryptography.GenerateKeyPair(nil)
 	if err != nil {
 		log.Println(err)
 	}
-	fmt.Printf("a: %v\n", a)
+	// data := map[string]interface{}{"id": "HTpLb7OwuuAXTsVdGRmvn"}
+	sig, err := cryptography.SignMessage("HTpLb7OwuuAXTsVdGRmvn", priv)
+	if err != nil {
+		log.Println(err)
+	}
+	bsig := cryptography.ConvertBytesToBase64(sig)
+	str := "HTpLb7OwuuAXTsVdGRmvn" + "," + bsig
+	fmt.Printf("[]byte(str): %v\n", []byte(str))
+	fmt.Printf("len([]byte(str)): %v\n", len([]byte(str)))
 }

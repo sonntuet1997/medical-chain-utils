@@ -10,6 +10,18 @@ func StrPtr(a string) *string {
 	return &a
 }
 
+func BoolPtr(a bool) *bool {
+	return &a
+}
+
+func IntPtr(a int) *int {
+	return &a
+}
+
+func Int32Ptr(a int32) *int32 {
+	return &a
+}
+
 func Bytes2UUID(a []byte) uuid.UUID {
 	if len(a) != 16 {
 		log.Println("parse uuid fail")
