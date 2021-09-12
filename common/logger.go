@@ -17,7 +17,7 @@ var (
 		},
 		&cli.IntFlag{
 			Name:    "grpc-port",
-			Value:   8080,
+			Value:   50051,
 			EnvVars: []string{"GRPC_PORT"},
 			Usage:   "The port for exposing the gRPC endpoints for accessing",
 		},
