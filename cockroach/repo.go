@@ -16,7 +16,7 @@ type CDBRepo struct {
 	Db         *gorm.DB
 	Logger     *logrus.Logger
 	Context    context.Context
-	Interfaces DBInterfaces
+	Interfaces DBInterfaces `wire:"-"`
 }
 
 func (c *CDBRepo) Close() error {
