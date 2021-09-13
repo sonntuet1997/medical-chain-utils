@@ -11,7 +11,7 @@ type CommonDataRepo interface {
 	Close() error
 	Migrate() error
 	Drop() error
-	Raw(interface{}) error
+	Raw(string) error
 }
 
 type CDBRepo struct {
