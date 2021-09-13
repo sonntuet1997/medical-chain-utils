@@ -38,5 +38,5 @@ func (c *CDBRepo) Drop() error {
 }
 
 func (c *CDBRepo) Raw(a string) error {
-	return c.Db.Raw(a).Error
+	return c.Db.Debug().Raw(a).Error
 }

@@ -54,5 +54,5 @@ func (c *CDBService) Drop() error {
 	return c.Db.Migrator().DropTable(c.Interfaces...)
 }
 func (c *CDBService) Raw(a string) error {
-	return c.Db.Raw(a).Error
+	return c.Db.Debug().Raw(a).Error
 }
