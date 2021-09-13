@@ -2,6 +2,7 @@ package cockroach
 
 import (
 	"context"
+
 	"github.com/sirupsen/logrus"
 	"gorm.io/gorm"
 )
@@ -10,6 +11,7 @@ type CommonDataRepo interface {
 	Close() error
 	Migrate() error
 	Drop() error
+	Raw(interface{}) error
 }
 
 type CDBRepo struct {
@@ -33,4 +35,8 @@ func (c *CDBRepo) Migrate() error {
 
 func (c *CDBRepo) Drop() error {
 	return c.Db.Migrator().DropTable(c.Interfaces...)
+}
+
+func (c *CDBRepo) Raw(a string) error {
+	return c.Db.Raw(a).Error
 }

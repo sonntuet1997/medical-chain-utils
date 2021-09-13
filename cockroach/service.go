@@ -13,7 +13,6 @@ type CommonDataService interface {
 	Close() error
 	Migrate() error
 	Drop() error
-	Raw(interface{}) error
 }
 
 type DBInterfaces []interface{}
