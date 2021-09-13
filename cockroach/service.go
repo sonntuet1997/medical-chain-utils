@@ -13,6 +13,7 @@ type CommonDataService interface {
 	Close() error
 	Migrate() error
 	Drop() error
+	Raw(interface{}) error
 }
 
 type DBInterfaces []interface{}
@@ -51,4 +52,7 @@ func (c *CDBService) Migrate() error {
 
 func (c *CDBService) Drop() error {
 	return c.Db.Migrator().DropTable(c.Interfaces...)
+}
+func (c *CDBService) Raw(a string) error {
+	return c.Db.Raw(a).Error
 }
