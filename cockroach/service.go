@@ -2,16 +2,18 @@ package cockroach
 
 import (
 	"context"
+	"time"
+
 	"github.com/sirupsen/logrus"
 	"gorm.io/driver/postgres"
 	"gorm.io/gorm"
-	"time"
 )
 
 type CommonDataService interface {
 	Close() error
 	Migrate() error
 	Drop() error
+	Raw(interface{}) error
 }
 
 type DBInterfaces []interface{}
