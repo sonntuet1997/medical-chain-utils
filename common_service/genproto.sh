@@ -14,7 +14,12 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+GOPATH=$HOME/go
 PATH=$PATH:$GOPATH/bin
 protodir=./pb
 
-protoc --go_out=plugins=grpc:. -I $protodir $protodir/*.proto
+#protoc --go-grpc_out=plugins=grpc:./src -I $protodir $protodir/*.proto
+
+protoc --go_out ./pb --go_opt paths=source_relative \
+   --go-grpc_out ./pb --go-grpc_opt paths=source_relative \
+   -I $protodir $protodir/*.proto
