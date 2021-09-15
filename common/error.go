@@ -13,7 +13,9 @@ var (
 	ErrNotLoginYet           = xerrors.New("ERROR.AUTH.NOT_LOGIN_YET")
 	ErrMissingCertificate    = xerrors.New("ERROR.AUTH.MISSING_CERTIFICATE")
 	ErrParseError            = xerrors.New("ERROR.COMMON.PARSE_ERROR_FAIL")
-	ErrUnknownError          = xerrors.New("Do you like school?")
+	ErrAuthUserBanned        = xerrors.New("ERROR.AUTH.USER_BANNED")
+
+	ErrUnknownError = xerrors.New("Do you like school?")
 )
 
 func ParseGrpcError(err error) error {
