@@ -29,9 +29,17 @@ func Hash256(a []byte) []byte {
 }
 
 func ConvertMessage(message interface{}) ([]byte, error) {
-	bmsg, err := json.Marshal(message)
-	if err != nil {
-		return nil, err
+	var bmsg []byte
+	var err error
+	switch message := message.(type) {
+	case json.RawMessage:
+		bmsg = message
+
+	default:
+		bmsg, err = json.Marshal(message)
+		if err != nil {
+			return nil, err
+		}
 	}
 	hash := Hash256(bmsg)
 	return hash, nil
