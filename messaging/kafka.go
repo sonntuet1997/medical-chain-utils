@@ -7,8 +7,9 @@ import (
 )
 
 type KafkaOptions struct {
-	Addr  string
-	Topic string
+	Addr    string
+	Topic   string
+	GroupID string
 }
 
 func ConnectReader(opts KafkaOptions) *kafka.Reader {
@@ -17,6 +18,7 @@ func ConnectReader(opts KafkaOptions) *kafka.Reader {
 		Topic:    opts.Topic,
 		MinBytes: 1,
 		MaxBytes: 10e6,
+		GroupID:  opts.GroupID,
 	})
 }
 
