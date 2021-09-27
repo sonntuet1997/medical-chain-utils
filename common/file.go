@@ -12,7 +12,7 @@ import (
 	"golang.org/x/xerrors"
 )
 
-func DecodeBase64toFile(data string) (string, error) {
+func DecodeBase64toFile(path string, data string) (string, error) {
 	name := uuid.New().String()
 	idx := strings.Index(data, ";base64,")
 	if idx < 0 {
@@ -33,7 +33,7 @@ func DecodeBase64toFile(data string) (string, error) {
 			return "", xerrors.New("bad png")
 		}
 
-		f, err := os.OpenFile(filename, os.O_WRONLY|os.O_CREATE, 0777)
+		f, err := os.OpenFile(path+"/"+filename, os.O_WRONLY|os.O_CREATE, 0777)
 		if err != nil {
 			return "", xerrors.New("cant open png")
 		}
@@ -49,7 +49,7 @@ func DecodeBase64toFile(data string) (string, error) {
 			return "", xerrors.New("bad jpeg")
 		}
 
-		f, err := os.OpenFile(filename, os.O_WRONLY|os.O_CREATE, 0777)
+		f, err := os.OpenFile(path+"/"+filename, os.O_WRONLY|os.O_CREATE, 0777)
 		if err != nil {
 			return "", xerrors.New("cant open jpeg")
 		}
