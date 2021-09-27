@@ -12,7 +12,7 @@ import (
 	"golang.org/x/xerrors"
 )
 
-func DecodeBase64toFile(path string, data string) (string, error) {
+func DecodeBase64toFile(path, data string) (string, error) {
 	name := uuid.New().String()
 	idx := strings.Index(data, ";base64,")
 	if idx < 0 {
@@ -30,32 +30,31 @@ func DecodeBase64toFile(path string, data string) (string, error) {
 		filename := name + ".png"
 		im, err := png.Decode(r)
 		if err != nil {
-			return "", xerrors.New("bad png")
+			panic("cant decode")
 		}
-
 		f, err := os.OpenFile(path+"/"+filename, os.O_WRONLY|os.O_CREATE, 0777)
 		if err != nil {
-			return "", xerrors.New("cant open png")
+			panic("cant open file")
 		}
 		err = png.Encode(f, im)
 		if err != nil {
-			return "", xerrors.New("cant encode")
+			panic("cant encode image")
 		}
 		return filename, nil
 	case "jpeg":
 		filename := name + ".jpeg"
 		im, err := png.Decode(r)
 		if err != nil {
-			return "", xerrors.New("bad jpeg")
+			panic("cant decode")
 		}
-
 		f, err := os.OpenFile(path+"/"+filename, os.O_WRONLY|os.O_CREATE, 0777)
+
 		if err != nil {
-			return "", xerrors.New("cant open jpeg")
+			panic("cant open file")
 		}
 		err = jpeg.Encode(f, im, nil)
 		if err != nil {
-			return "", xerrors.New("cant encode")
+			panic("cant encode image")
 		}
 		return filename, nil
 
