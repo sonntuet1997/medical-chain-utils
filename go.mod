@@ -4,7 +4,7 @@ go 1.16
 
 require (
 	github.com/cpuguy83/go-md2man/v2 v2.0.1 // indirect
-	github.com/ethereum/go-ethereum v1.10.8
+	github.com/ethereum/go-ethereum v1.10.8 // indirect
 	github.com/golang/protobuf v1.5.2
 	github.com/golang/snappy v0.0.4 // indirect
 	github.com/google/uuid v1.3.0
