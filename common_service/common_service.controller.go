@@ -3,7 +3,6 @@ package common_service
 import (
 	"context"
 	"os"
-	"syscall"
 	"time"
 
 	"github.com/sirupsen/logrus"
@@ -60,7 +59,7 @@ func (c *CommonServiceServer) Kill(_ context.Context, _ *emptypb.Empty) (*emptyp
 		if err != nil {
 			return nil, err
 		}
-		err = process.Signal(syscall.SIGTERM)
+		err = process.Kill()
 		if err != nil {
 			return nil, err
 		}
