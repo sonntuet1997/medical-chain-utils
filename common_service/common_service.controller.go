@@ -48,10 +48,10 @@ func (c *CommonServiceServer) Kill(_ context.Context, _ *emptypb.Empty) (*emptyp
 	c.Logger.Warnf("Recieved shutting down request at %s", time.Now())
 	if c.AllowKill {
 		c.Logger.Warnf("Accepted shutting down request at %s", time.Now())
-		err := syscall.Kill(syscall.Getpid(), syscall.SIGINT)
-		if err != nil {
-			return nil, err
-		}
+		// err := syscall.Kill(syscall.Getpid(), syscall.SIGINT)
+		// if err != nil {
+		// 	return nil, err
+		// }
 		// err = syscall.Kill(syscall.Getpid(), syscall.SIGTERM)
 		// if err != nil {
 		// 	return nil, err
