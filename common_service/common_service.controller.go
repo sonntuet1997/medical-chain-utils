@@ -2,14 +2,16 @@ package common_service
 
 import (
 	"context"
+	"os"
+	"syscall"
+	"time"
+
 	"github.com/sirupsen/logrus"
 	"github.com/sonntuet1997/medical-chain-utils/common_service/pb"
 	"google.golang.org/grpc/codes"
 	healthpb "google.golang.org/grpc/health/grpc_health_v1"
 	"google.golang.org/grpc/status"
 	"google.golang.org/protobuf/types/known/emptypb"
-	"syscall"
-	"time"
 )
 
 var (
@@ -50,7 +52,15 @@ func (c *CommonServiceServer) Kill(_ context.Context, _ *emptypb.Empty) (*emptyp
 		if err != nil {
 			return nil, err
 		}
-		err = syscall.Kill(syscall.Getpid(), syscall.SIGTERM)
+		// err = syscall.Kill(syscall.Getpid(), syscall.SIGTERM)
+		// if err != nil {
+		// 	return nil, err
+		// }
+		process, err := os.FindProcess(os.Getpid())
+		if err != nil {
+			return nil, err
+		}
+		err = process.Signal(syscall.SIGTERM)
 		if err != nil {
 			return nil, err
 		}
