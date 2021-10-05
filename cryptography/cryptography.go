@@ -35,6 +35,8 @@ func ConvertMessage(message interface{}) ([]byte, error) {
 	case json.RawMessage:
 		bmsg = message
 
+	case string:
+		bmsg = []byte(message)
 	default:
 		bmsg, err = json.Marshal(message)
 		if err != nil {
