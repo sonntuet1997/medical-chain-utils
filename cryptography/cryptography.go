@@ -1,6 +1,8 @@
 package cryptography
 
 import (
+	"crypto/aes"
+	"crypto/cipher"
 	"crypto/ecdsa"
 	"crypto/elliptic"
 	"crypto/rand"
@@ -8,6 +10,7 @@ import (
 	"encoding/base64"
 	"encoding/json"
 	"errors"
+	"io"
 	"log"
 	"math/big"
 	"time"
@@ -26,6 +29,38 @@ func copyBytes(b [32]byte) []byte {
 func Hash256(a []byte) []byte {
 	hash := copyBytes(sha256.Sum256(a))
 	return hash
+}
+
+func EncryptMessage(message []byte, secKey []byte) ([]byte, error) {
+	block, _ := aes.NewCipher(Hash256(secKey))
+	gcm, err := cipher.NewGCM(block)
+	if err != nil {
+		panic(err.Error())
+	}
+	nonce := make([]byte, gcm.NonceSize())
+	if _, err = io.ReadFull(rand.Reader, nonce); err != nil {
+		panic(err.Error())
+	}
+	ciphertext := gcm.Seal(nonce, nonce, message, nil)
+	return ciphertext, nil
+}
+func DecryptCipher(data []byte, secKey []byte) ([]byte, error) {
+	key := Hash256(secKey)
+	block, err := aes.NewCipher(key)
+	if err != nil {
+		return nil, err
+	}
+	gcm, err := cipher.NewGCM(block)
+	if err != nil {
+		return nil, err
+	}
+	nonceSize := gcm.NonceSize()
+	nonce, ciphertext := data[:nonceSize], data[nonceSize:]
+	plaintext, err := gcm.Open(nil, nonce, ciphertext, nil)
+	if err != nil {
+		return nil, err
+	}
+	return plaintext, nil
 }
 
 func ConvertMessage(message interface{}) ([]byte, error) {
