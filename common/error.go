@@ -26,3 +26,14 @@ func ParseGrpcError(err error) error {
 
 	return xerrors.New(s.Message())
 }
+
+func Unwrap(err error) error {
+	curerror := err
+	for {
+		err, ok := curerror.(xerrors.Wrapper)
+		if !ok {
+			return curerror
+		}
+		curerror = err.Unwrap()
+	}
+}
