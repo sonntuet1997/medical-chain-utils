@@ -139,14 +139,14 @@ func VerifySig(msg interface{}, sig []byte, pub []byte) (bool, error) {
 	return ok, nil
 
 }
-func GenAuthorization(id string, privateKey string) (string, error) {
+func GenAuthorization(id string, publicKey string) (string, error) {
 	ID, err := uuid.Parse(id)
 	if err != nil {
 		return "", err
 	}
 	type certificateStruct struct {
 		ID        string `json:"id"`
-		Timestamp string `json:"timestamp"`
+		Timestamp int64  `json:"timestamp"`
 		Exp       int    `json:"exp"`
 	}
 	type authForm struct {
@@ -154,29 +154,13 @@ func GenAuthorization(id string, privateKey string) (string, error) {
 		certificateStruct `json:"certificateInfo"`
 		PublicKey         string `json:"publicKey"`
 	}
-	// Gen key pair
-	var pk, Pk []byte
-	if privateKey != "" {
-		pk, Pk, err = GenerateKeyPair([]byte(privateKey))
-		if err != nil {
-			return "", err
-		}
-	} else {
-		bpk, _ := ConvertBase64ToBytes("GmQE4ZljJ5PCXev2dRPCW2JHVefgsTM6+96CmqJjb0w=")
-		pk, Pk, err = GenerateKeyPair(bpk)
-		if err != nil {
-			return "", err
-		}
-	}
 	var auth authForm
-	auth.PublicKey = ConvertBytesToBase64(Pk)
+	auth.PublicKey = publicKey
 	var cert certificateStruct
 	cert.ID = ID.String()
-	cert.Timestamp = time.Now().String()
+	cert.Timestamp = time.Now().Unix()
 	cert.Exp = 24 * 60 * 60 * 60
-	bsig, _ := SignMessage(cert, pk)
-	sig := ConvertBytesToBase64(bsig)
-	auth.Signature = sig
+	auth.Signature = publicKey
 	auth.certificateStruct = cert
 	str, err := json.Marshal(auth)
 
