@@ -1,11 +1,12 @@
 package common
 
 import (
-	"github.com/sirupsen/logrus"
-	"github.com/urfave/cli/v2"
 	"os"
 	"strings"
 	"time"
+
+	"github.com/sirupsen/logrus"
+	"github.com/urfave/cli/v2"
 )
 
 var (
@@ -67,6 +68,12 @@ var (
 			Usage:   "Log format: (plain|json)",
 			Value:   "json",
 		},
+		&cli.StringFlag{
+			Name:    "log-file-path",
+			EnvVars: []string{"LOG_FILE_PATH"},
+			Usage:   "Log file path",
+			// Value:   "/var/medichain.log",
+		},
 	}
 )
 
@@ -76,6 +83,15 @@ func InitLogger(appCtx *cli.Context) *logrus.Logger {
 	logLevel := appCtx.String("log-level")
 	level, err := logrus.ParseLevel(logLevel)
 	logger.Out = os.Stdout
+	if logPath := appCtx.String("log-file-path"); logPath != "" {
+		file, err := os.Create(logPath)
+		if err != nil {
+			logger.Fatalf("File path: %s", logPath)
+			return logger
+		}
+		logger.Out = file
+	}
+
 	if err != nil {
 		logger.Fatalf("Unknown log-level type: %s", logLevel)
 		return logger
