@@ -6,7 +6,7 @@ import (
 
 type CommonDataService interface {
 	Close() error
-	Migrate() error
+	Migrate(sql string) error
 }
 
 type CockroachCDBRepo struct {
