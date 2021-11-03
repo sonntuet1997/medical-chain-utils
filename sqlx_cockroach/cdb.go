@@ -9,7 +9,7 @@ type CommonDataService interface {
 	Migrate() error
 }
 
-type CockroachDBStore struct {
+type CockroachCDBRepo struct {
 	Db *sqlx.DB
 }
 
@@ -21,11 +21,11 @@ func NewCockroachDBConnection(dsn string) (*sqlx.DB, error) {
 	return db, nil
 }
 
-func (c *CockroachDBStore) Close() error {
+func (c *CockroachCDBRepo) Close() error {
 	return c.Db.Close()
 }
 
-func (c *CockroachDBStore) Migrate(sql string) error {
+func (c *CockroachCDBRepo) Migrate(sql string) error {
 	_, err := c.Db.Exec(sql)
 	return err
 }
