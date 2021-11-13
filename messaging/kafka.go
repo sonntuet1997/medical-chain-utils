@@ -28,7 +28,7 @@ func ConnectWriter(opts KafkaOptions) *kafka.Writer {
 		Balancer:     &kafka.LeastBytes{},
 		WriteTimeout: 5 * time.Second,
 		MaxAttempts:  4,
-		Async:        true,
+		Async:        false,
 		BatchSize:    1,
 		Brokers:      []string{opts.Addr},
 	})
